@@ -11,6 +11,7 @@ import {
 import { APP_URL } from "../../../../constants";
 import { api } from "../../../services/api";
 import { Cookie } from "../constants";
+import { saveAuthToken } from "../services/token/saveAuthToken";
 import { Permission, Role } from "../types";
 
 interface User {
@@ -38,11 +39,6 @@ interface AuthProviderProps {
 const AuthContext = createContext({} as AuthContextData);
 
 let authChannel: BroadcastChannel;
-
-const cookieConfig: CookieSerializeOptions = {
-  maxAge: 60 * 60 * 24 * 30, // 30 days
-  path: "/",
-};
 
 export const signOut = () => {
   destroyCookie(undefined, Cookie.Token);
@@ -96,16 +92,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { token, refreshToken, permissions, roles } = response.data;
 
-      setCookie(undefined, Cookie.Token, token, cookieConfig);
-      setCookie(undefined, Cookie.RefreshToken, refreshToken, cookieConfig);
+      saveAuthToken({
+        refreshToken,
+        token,
+        apiClient: api,
+      });
 
       setUser({
         email,
         permissions,
         roles,
       });
-
-      api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
       Router.push("/dashboard");
       authChannel.postMessage("signIn");
