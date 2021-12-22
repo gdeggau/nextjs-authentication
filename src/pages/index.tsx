@@ -1,8 +1,8 @@
 import { NextPage } from "next";
 import { FormEvent, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../features/auth/contexts/AuthContext";
+import { withSSRGuest } from "../features/auth/utils/withSSRGuest";
 import styles from "../styles/Home.module.css";
-import { withSSRGuest } from "../utils/withSSRGuest";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");

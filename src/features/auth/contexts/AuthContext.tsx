@@ -7,8 +7,8 @@ import {
   useState,
 } from "react";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
-import { api } from "../services/apiClient";
-import { APP_URL } from "../constants";
+import { APP_URL } from "../../../../constants";
+import { api } from "../../../services/apiClient";
 
 interface User {
   email: string;

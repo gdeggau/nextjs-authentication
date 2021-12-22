@@ -1,11 +1,10 @@
-import { destroyCookie } from "nookies";
 import { useEffect } from "react";
-import { Can } from "../components";
-import { useAuth } from "../contexts/AuthContext";
-import { useCan } from "../hooks/useCan";
+import { Can } from "../features/auth/components";
+import { useAuth } from "../features/auth/contexts/AuthContext";
+import { useCan } from "../features/auth/hooks/useCan";
+import { withSSRAuth } from "../features/auth/utils/withSSRAuth";
 import { setupAPIClient } from "../services/api";
 import { api } from "../services/apiClient";
-import { withSSRAuth } from "../utils/withSSRAuth";
 
 const Dashboard = () => {
   const { user, signOut } = useAuth();
