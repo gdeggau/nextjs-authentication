@@ -10,27 +10,27 @@ import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { api } from "../services/apiClient";
 import { APP_URL } from "../constants";
 
-type User = {
+interface User {
   email: string;
   permissions: string[];
   roles: string[];
-};
+}
 
-type SignInCredentials = {
+interface SignInCredentials {
   email: string;
   password: string;
-};
+}
 
-type AuthContextData = {
+interface AuthContextData {
   signOut: () => void;
   signIn: (credentials: SignInCredentials) => Promise<void>;
   user: User | undefined;
   isAuthenticated: boolean;
-};
+}
 
-type AuthProviderProps = {
+interface AuthProviderProps {
   children: ReactNode;
-};
+}
 
 const AuthContext = createContext({} as AuthContextData);
 

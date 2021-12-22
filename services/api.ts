@@ -5,10 +5,10 @@ import { signOut } from "../contexts/AuthContext";
 import { GetServerSidePropsContext } from "next";
 import { AuthTokenError } from "./errors/AuthTokenError";
 
-type FailedRequestQueue = {
+interface FailedRequestQueue {
   onSuccess: (token: string) => void;
   onFailure: (error: AxiosError) => void;
-};
+}
 
 type Context = undefined | GetServerSidePropsContext;
 
@@ -25,16 +25,7 @@ export function setupAPIClient(ctx: Context = undefined) {
     },
   });
 
-  // Set Bearer token in each request
-  // api.interceptors.request.use(function (config) {
-  //   cookies = parseCookies(ctx);
-  //   const { "nextauth.token": token } = cookies;
-  //   if (!config?.headers) return;
-  //   config.headers.Authorization = token ? `Bearer ${token}` : "";
-  //   return config;
-  // });
-
-  // Mechanism to get new tokens
+  // Refresh token mechanism
   api.interceptors.response.use(
     (response) => {
       return response;
@@ -49,8 +40,6 @@ export function setupAPIClient(ctx: Context = undefined) {
 
           if (!isRefreshing) {
             isRefreshing = true;
-
-            console.log("refreshing");
 
             api
               .post("/refresh", {

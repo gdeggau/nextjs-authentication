@@ -1,5 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
-import { parseCookies } from "nookies";
+import { NextPage } from "next";
 import { FormEvent, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import styles from "../styles/Home.module.css";
