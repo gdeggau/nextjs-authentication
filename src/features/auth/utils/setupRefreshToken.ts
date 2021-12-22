@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import { parseCookies, setCookie } from "nookies";
 import { signOut } from "../contexts/AuthContext";
 import { AuthTokenError } from "../errors/AuthTokenError";
+import { Context } from "../types";
 
 interface FailedRequestQueue {
   onSuccess: (token: string) => void;
@@ -13,7 +14,7 @@ let isRefreshing = false;
 let failedRequestsQueue: Array<FailedRequestQueue> = [];
 
 interface setupRefreshTokenParams {
-  ctx?: GetServerSidePropsContext;
+  ctx?: Context;
   apiClient: AxiosInstance;
 }
 

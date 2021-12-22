@@ -9,11 +9,12 @@ import {
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { APP_URL } from "../../../../constants";
 import { api } from "../../../services/api";
+import { Permission, Role } from "../types";
 
 interface User {
   email: string;
-  permissions: string[];
-  roles: string[];
+  permissions: Permission[];
+  roles: Role[];
 }
 
 interface SignInCredentials {
