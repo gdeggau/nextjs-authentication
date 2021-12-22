@@ -1,9 +1,8 @@
 import { AxiosError, AxiosInstance } from "axios";
-import { GetServerSidePropsContext } from "next";
 import { parseCookies, setCookie } from "nookies";
-import { signOut } from "../contexts/AuthContext";
-import { AuthTokenError } from "../errors/AuthTokenError";
-import { Context, Cookie } from "../types";
+import { signOut } from "../../contexts/AuthContext";
+import { AuthTokenError } from "../../errors/AuthTokenError";
+import { Context, Cookie } from "../../types";
 
 interface FailedRequestQueue {
   onSuccess: (token: string) => void;

@@ -1,5 +1,5 @@
 import { useAuth } from "../contexts/AuthContext";
-import { validateUserPermissions } from "../utils/validateUserPermissions";
+import { validateUserPermissions } from "../services/authorization/validateUserPermissions";
 
 interface UseCanParams {
   permissions?: string[];

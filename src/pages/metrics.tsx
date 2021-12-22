@@ -1,4 +1,4 @@
-import { withSSRAuth } from "../features/auth/utils/withSSRAuth";
+import { withSSRAuth } from "../features/auth/services/authorization/withSSRAuth";
 import { setupApiClient } from "../services/api/setupApiClient";
 
 const Metrics = () => {

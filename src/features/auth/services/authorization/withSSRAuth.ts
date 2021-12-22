@@ -5,8 +5,8 @@ import {
   GetServerSidePropsResult,
 } from "next";
 import { destroyCookie, parseCookies } from "nookies";
-import { AuthTokenError } from "../errors/AuthTokenError";
-import { Cookie } from "../types";
+import { AuthTokenError } from "../../errors/AuthTokenError";
+import { Cookie } from "../../types";
 import { validateUserPermissions } from "./validateUserPermissions";
 
 interface WithSSRAuthOptions {
