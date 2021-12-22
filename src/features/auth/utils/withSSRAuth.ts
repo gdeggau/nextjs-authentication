@@ -6,6 +6,7 @@ import {
 } from "next";
 import { destroyCookie, parseCookies } from "nookies";
 import { AuthTokenError } from "../errors/AuthTokenError";
+import { Cookie } from "../types";
 import { validateUserPermissions } from "./validateUserPermissions";
 
 interface WithSSRAuthOptions {
@@ -21,7 +22,7 @@ export function withSSRAuth<P>(
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(ctx);
-    const token = cookies["nextauth.token"];
+    const token = cookies[Cookie.Token];
 
     if (!token) {
       return {
@@ -56,8 +57,8 @@ export function withSSRAuth<P>(
       return await fn(ctx);
     } catch (error) {
       if (error instanceof AuthTokenError) {
-        destroyCookie(ctx, "nextauth.token");
-        destroyCookie(ctx, "nextauth.refreshToken");
+        destroyCookie(ctx, Cookie.Token);
+        destroyCookie(ctx, Cookie.RefreshToken);
         return {
           redirect: {
             destination: "/",

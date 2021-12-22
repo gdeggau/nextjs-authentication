@@ -20,5 +20,5 @@ export const useCookie = <K extends string, V>(key: K, ctx?: Context) => {
     destroyCookie(ctx, key);
   };
 
-  return [getCookie, setCookie, deleteCookie] as const;
+  return { getCookie, setCookie, deleteCookie } as const;
 };
