@@ -1,5 +1,5 @@
 import { withSSRAuth } from "../features/auth/utils/withSSRAuth";
-import { setupAPIClient } from "../services/api";
+import { setupApiClient } from "../services/api/setupApiClient";
 
 const Metrics = () => {
   return (
@@ -11,7 +11,7 @@ const Metrics = () => {
 
 export const getServerSideProps = withSSRAuth(
   async (ctx) => {
-    const apiClient = setupAPIClient(ctx);
+    const apiClient = setupApiClient(ctx);
     const response = await apiClient.get("/me");
 
     return {

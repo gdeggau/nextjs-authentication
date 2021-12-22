@@ -3,8 +3,8 @@ import { Can } from "../features/auth/components";
 import { useAuth } from "../features/auth/contexts/AuthContext";
 import { useCan } from "../features/auth/hooks/useCan";
 import { withSSRAuth } from "../features/auth/utils/withSSRAuth";
-import { setupAPIClient } from "../services/api";
-import { api } from "../services/apiClient";
+import { api } from "../services/api";
+import { setupApiClient } from "../services/api/setupApiClient";
 
 const Dashboard = () => {
   const { user, signOut } = useAuth();
@@ -35,7 +35,7 @@ const Dashboard = () => {
 };
 
 export const getServerSideProps = withSSRAuth(async (ctx) => {
-  const apiClient = setupAPIClient(ctx);
+  const apiClient = setupApiClient(ctx);
   const response = await apiClient.get("/me");
   return {
     props: {},

@@ -1,32 +1,30 @@
-import axios, { AxiosError } from "axios";
-import { API_BASE_URL } from "../../constants";
-import { parseCookies, setCookie } from "nookies";
+import { AxiosError, AxiosInstance } from "axios";
 import { GetServerSidePropsContext } from "next";
-import { AuthTokenError } from "./errors/AuthTokenError";
-import { signOut } from "../features/auth/contexts/AuthContext";
+import { parseCookies, setCookie } from "nookies";
+import { signOut } from "../contexts/AuthContext";
+import { AuthTokenError } from "../errors/AuthTokenError";
 
 interface FailedRequestQueue {
   onSuccess: (token: string) => void;
   onFailure: (error: AxiosError) => void;
 }
 
-type Context = undefined | GetServerSidePropsContext;
-
 let isRefreshing = false;
 let failedRequestsQueue: Array<FailedRequestQueue> = [];
 
-export function setupAPIClient(ctx: Context = undefined) {
-  let cookies = parseCookies(ctx);
+interface setupRefreshTokenParams {
+  ctx?: GetServerSidePropsContext;
+  apiClient: AxiosInstance;
+}
 
-  const api = axios.create({
-    baseURL: API_BASE_URL,
-    headers: {
-      Authorization: `Bearer ${cookies["nextauth.token"]}`,
-    },
-  });
+export function setupRefreshToken({ ctx, apiClient }: setupRefreshTokenParams) {
+  let cookies = parseCookies(ctx);
+  const tokenJwt = cookies["nextauth.token"];
+
+  apiClient.defaults.headers["Authorization"] = `Bearer ${tokenJwt}`;
 
   // Refresh token mechanism
-  api.interceptors.response.use(
+  apiClient.interceptors.response.use(
     (response) => {
       return response;
     },
@@ -41,7 +39,7 @@ export function setupAPIClient(ctx: Context = undefined) {
           if (!isRefreshing) {
             isRefreshing = true;
 
-            api
+            apiClient
               .post("/refresh", {
                 refreshToken,
               })
@@ -62,7 +60,7 @@ export function setupAPIClient(ctx: Context = undefined) {
                   }
                 );
 
-                api.defaults.headers["Authorization"] = `Bearer ${token}`;
+                apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
                 failedRequestsQueue.forEach((req) => req.onSuccess(token));
                 failedRequestsQueue = [];
               })
@@ -81,7 +79,7 @@ export function setupAPIClient(ctx: Context = undefined) {
             failedRequestsQueue.push({
               onSuccess: (token: string) => {
                 originalConfig.headers["Authorization"] = `Bearer ${token}`;
-                resolve(api(originalConfig));
+                resolve(apiClient(originalConfig));
               },
               onFailure: (err: AxiosError) => {
                 reject(err);
@@ -99,5 +97,5 @@ export function setupAPIClient(ctx: Context = undefined) {
       return Promise.reject(error);
     }
   );
-  return api;
+  return apiClient;
 }

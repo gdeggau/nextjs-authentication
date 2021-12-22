@@ -8,7 +8,7 @@ import {
 } from "react";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { APP_URL } from "../../../../constants";
-import { api } from "../../../services/apiClient";
+import { api } from "../../../services/api";
 
 interface User {
   email: string;
