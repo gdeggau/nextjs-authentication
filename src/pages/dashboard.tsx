@@ -1,8 +1,5 @@
+import { Can, useAuth, useCan, withSSRAuth } from "@features/auth";
 import { useEffect } from "react";
-import { Can } from "../features/auth/components";
-import { useAuth } from "../features/auth/contexts/AuthContext";
-import { useCan } from "../features/auth/hooks/useCan";
-import { withSSRAuth } from "../features/auth/services/authorization/withSSRAuth";
 import { api } from "../services/api";
 import { setupApiClient } from "../services/api/setupApiClient";
 

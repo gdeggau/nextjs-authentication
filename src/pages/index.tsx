@@ -1,7 +1,6 @@
+import { useAuth, withSSRGuest } from "@/features/auth";
 import { NextPage } from "next";
 import { FormEvent, useState } from "react";
-import { useAuth } from "../features/auth/contexts/AuthContext";
-import { withSSRGuest } from "../features/auth/services/authorization/withSSRGuest";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
