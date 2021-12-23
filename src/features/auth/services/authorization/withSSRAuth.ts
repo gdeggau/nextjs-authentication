@@ -4,9 +4,10 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from "next";
-import { destroyCookie, parseCookies } from "nookies";
+import { parseCookies } from "nookies";
 import { AuthTokenError } from "../../errors/AuthTokenError";
 import { Cookie } from "../../types";
+import { deleteAuthToken } from "../token/deleteAuthToken";
 import { validateUserPermissions } from "./validateUserPermissions";
 
 interface WithSSRAuthOptions {
@@ -57,8 +58,7 @@ export function withSSRAuth<P>(
       return await fn(ctx);
     } catch (error) {
       if (error instanceof AuthTokenError) {
-        destroyCookie(ctx, Cookie.Token);
-        destroyCookie(ctx, Cookie.RefreshToken);
+        deleteAuthToken(ctx);
         return {
           redirect: {
             destination: "/",

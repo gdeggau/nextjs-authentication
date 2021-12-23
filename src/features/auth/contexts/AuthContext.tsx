@@ -11,6 +11,7 @@ import {
 import { APP_URL } from "../../../../constants";
 import { api } from "../../../services/api";
 import { Cookie } from "../constants";
+import { deleteAuthToken } from "../services/token/deleteAuthToken";
 import { saveAuthToken } from "../services/token/saveAuthToken";
 import { Permission, Role } from "../types";
 
@@ -41,8 +42,7 @@ const AuthContext = createContext({} as AuthContextData);
 let authChannel: BroadcastChannel;
 
 export const signOut = () => {
-  destroyCookie(undefined, Cookie.Token);
-  destroyCookie(undefined, Cookie.RefreshToken);
+  deleteAuthToken();
   authChannel.postMessage("signOut");
   Router.push("/");
 };

@@ -7,7 +7,7 @@ type ChannelEvent = {
 
 let authChannel: BroadcastChannel;
 let events: ChannelEvent = {
-  signOut: () => deleteAuthToken(undefined, false),
+  signOut: () => deleteAuthToken(undefined),
   signIn: () => window.location.reload(),
 };
 
