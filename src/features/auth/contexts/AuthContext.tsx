@@ -1,6 +1,5 @@
-import { CookieSerializeOptions } from "next/dist/server/web/types";
 import Router from "next/router";
-import { destroyCookie, parseCookies, setCookie } from "nookies";
+import { parseCookies } from "nookies";
 import {
   createContext,
   ReactNode,
@@ -8,18 +7,16 @@ import {
   useEffect,
   useState,
 } from "react";
-import { APP_URL } from "../../../../constants";
 import { api } from "../../../services/api";
 import { Cookie } from "../constants";
+import { AuthMessage } from "../constants/broadcast";
+import {
+  getAuthChannel,
+  initAuthBroadcast,
+} from "../services/broadcast/authChannel";
 import { deleteAuthToken } from "../services/token/deleteAuthToken";
 import { saveAuthToken } from "../services/token/saveAuthToken";
-import { Permission, Role } from "../types";
-
-interface User {
-  email: string;
-  permissions: Permission[];
-  roles: Role[];
-}
+import { User } from "../types/user";
 
 interface SignInCredentials {
   email: string;
@@ -39,11 +36,8 @@ interface AuthProviderProps {
 
 const AuthContext = createContext({} as AuthContextData);
 
-let authChannel: BroadcastChannel;
-
 export const signOut = () => {
   deleteAuthToken();
-  authChannel.postMessage("signOut");
   Router.push("/");
 };
 
@@ -52,20 +46,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user;
 
   useEffect(() => {
-    authChannel = new BroadcastChannel("auth");
-    authChannel.onmessage = (message) => {
-      switch (message.data) {
-        case "signOut":
-          signOut();
-          authChannel.close();
-          break;
-        case "signIn":
-          window.location.replace(`${APP_URL}/dashboard`);
-          break;
-        default:
-          break;
-      }
-    };
+    initAuthBroadcast();
   }, []);
 
   useEffect(() => {
@@ -105,7 +86,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
 
       Router.push("/dashboard");
-      authChannel.postMessage("signIn");
+      getAuthChannel().postMessage(AuthMessage.SignIn);
     } catch (error) {}
   }
 
