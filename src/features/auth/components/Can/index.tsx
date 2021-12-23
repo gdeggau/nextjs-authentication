@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 import { useCan } from "../../hooks/useCan";
+import { Permission, Role } from "../../types";
+import { Authorizations } from "../../types/authorizations";
 
-interface CanProps {
+interface CanProps extends Partial<Authorizations> {
   children: ReactNode;
-  permissions?: string[];
-  roles?: string[];
 }
 
 export function Can({ children, permissions, roles }: CanProps) {

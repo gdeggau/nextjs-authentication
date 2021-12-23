@@ -1,10 +1,8 @@
 import { useAuth } from "../contexts/AuthContext";
 import { validateUserPermissions } from "../services/authorization/validateUserPermissions";
+import { Authorizations } from "../types/authorizations";
 
-interface UseCanParams {
-  permissions?: string[];
-  roles?: string[];
-}
+type UseCanParams = Partial<Authorizations>;
 
 export function useCan({ permissions, roles }: UseCanParams) {
   const { user, isAuthenticated } = useAuth();

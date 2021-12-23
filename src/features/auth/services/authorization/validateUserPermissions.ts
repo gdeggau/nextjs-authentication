@@ -1,12 +1,9 @@
-interface User {
-  permissions: string[];
-  roles: string[];
-}
+import { Authorizations } from "../../types/authorizations";
 
-interface ValidateUserPermissionsParams {
-  user: User;
-  permissions?: string[];
-  roles?: string[];
+type UserAuthorizations = Authorizations;
+
+interface ValidateUserPermissionsParams extends Partial<Authorizations> {
+  user: UserAuthorizations;
 }
 
 export function validateUserPermissions({
