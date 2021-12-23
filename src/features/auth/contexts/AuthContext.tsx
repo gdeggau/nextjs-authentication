@@ -1,3 +1,4 @@
+import { ROUTES } from "@constants";
 import Router from "next/router";
 import { parseCookies } from "nookies";
 import {
@@ -36,7 +37,7 @@ const AuthContext = createContext({} as AuthContextData);
 
 export const signOut = () => {
   deleteAuthToken();
-  Router.push("/");
+  Router.push(ROUTES.home.path);
 };
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -83,7 +84,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         roles,
       });
 
-      Router.push("/dashboard");
+      Router.push(ROUTES.dashboard.path);
       getAuthChannel().postMessage(AuthMessage.SignIn);
     } catch (error) {}
   }

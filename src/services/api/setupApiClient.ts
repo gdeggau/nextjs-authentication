@@ -1,6 +1,6 @@
 import axios from "axios";
 import { GetServerSidePropsContext } from "next";
-import { API_BASE_URL } from "../../../constants";
+import { API_BASE_URL } from "@/constants";
 import { setupRefreshToken } from "../../features/auth/services/token/setupRefreshToken";
 
 type Context = undefined | GetServerSidePropsContext;

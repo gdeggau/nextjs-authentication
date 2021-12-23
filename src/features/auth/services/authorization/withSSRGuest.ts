@@ -1,3 +1,4 @@
+import { ROUTES } from "@constants";
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
@@ -15,7 +16,7 @@ export function withSSRGuest<P>(fn: GetServerSideProps<P>) {
     if (cookies[Cookie.Token]) {
       return {
         redirect: {
-          destination: "/dashboard",
+          destination: ROUTES.dashboard.path,
           permanent: false,
         },
       };

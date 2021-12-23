@@ -1,3 +1,4 @@
+import { ROUTES } from "@constants";
 import Router from "next/router";
 import { AuthMessage } from "../../constants/broadcast";
 import { BroadcastError } from "../../errors/BroadcastError";
@@ -9,7 +10,7 @@ type ChannelEvent = {
 
 let authChannel: BroadcastChannel;
 let events: ChannelEvent = {
-  signOut: () => Router.push("/"),
+  signOut: () => Router.push(ROUTES.home.path),
   signIn: () => window.location.reload(),
 };
 

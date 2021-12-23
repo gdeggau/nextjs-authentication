@@ -1,3 +1,4 @@
+import { ROUTES } from "@constants";
 import jwtDecode from "jwt-decode";
 import {
   GetServerSideProps,
@@ -23,7 +24,7 @@ export function withSSRAuth<P>(
     if (!token) {
       return {
         redirect: {
-          destination: "/",
+          destination: ROUTES.home.path,
           permanent: false,
         },
       };
@@ -43,7 +44,7 @@ export function withSSRAuth<P>(
       if (!userHasValidPermissions) {
         return {
           redirect: {
-            destination: "/dashboard",
+            destination: ROUTES.dashboard.path,
             permanent: false,
           },
         };
@@ -57,7 +58,7 @@ export function withSSRAuth<P>(
         deleteAuthToken(ctx);
         return {
           redirect: {
-            destination: "/",
+            destination: ROUTES.home.path,
             permanent: false,
           },
         };
