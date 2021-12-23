@@ -6,8 +6,7 @@ import {
 } from "next";
 import { parseCookies } from "nookies";
 import { AuthTokenError } from "../../errors/AuthTokenError";
-import { Cookie, Permission, Role } from "../../types";
-import { Authorizations } from "../../types/authorizations";
+import { Cookie, Permission, Role, Authorizations } from "../../types";
 import { deleteAuthToken } from "../token/deleteAuthToken";
 import { validateUserPermissions } from "./validateUserPermissions";
 

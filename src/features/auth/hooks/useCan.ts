@@ -1,6 +1,6 @@
 import { useAuth } from "../contexts/AuthContext";
-import { validateUserPermissions } from "../services/authorization/validateUserPermissions";
-import { Authorizations } from "../types/authorizations";
+import { validateUserPermissions } from "../services/authorization";
+import { Authorizations } from "../types";
 
 type UseCanParams = Partial<Authorizations>;
 

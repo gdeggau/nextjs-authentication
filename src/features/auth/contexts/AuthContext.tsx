@@ -8,14 +8,12 @@ import {
   useState,
 } from "react";
 import { api } from "../../../services/api";
-import { Cookie } from "../constants";
-import { AuthMessage } from "../constants/broadcast";
+import { Cookie, AuthMessage } from "../constants";
 import {
   getAuthChannel,
   initAuthBroadcast,
 } from "../services/broadcast/authChannel";
-import { deleteAuthToken } from "../services/token/deleteAuthToken";
-import { saveAuthToken } from "../services/token/saveAuthToken";
+import { deleteAuthToken, saveAuthToken } from "../services/token";
 import { User } from "../types/user";
 
 interface SignInCredentials {

@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import { CookieSerializeOptions } from "next/dist/server/web/types";
 import { setCookie } from "nookies";
 import { Context, Cookie } from "../../types";
-import { setAuthorizationHeader } from "./setAuthorizationHeader";
+import { setAuthorizationHeader } from ".";
 
 const cookieConfig: CookieSerializeOptions = {
   maxAge: 60 * 60 * 24 * 30, // 30 days

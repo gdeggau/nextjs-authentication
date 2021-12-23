@@ -1,10 +1,9 @@
 import { AxiosError, AxiosInstance } from "axios";
-import { parseCookies, setCookie } from "nookies";
+import { parseCookies } from "nookies";
+import { saveAuthToken, setAuthorizationHeader } from ".";
 import { signOut } from "../../contexts/AuthContext";
 import { AuthTokenError } from "../../errors/AuthTokenError";
 import { Context, Cookie } from "../../types";
-import { saveAuthToken } from "./saveAuthToken";
-import { setAuthorizationHeader } from "./setAuthorizationHeader";
 
 interface FailedRequestQueue {
   onSuccess: (token: string) => void;
@@ -23,7 +22,6 @@ export function setupRefreshToken({ ctx, apiClient }: setupRefreshTokenParams) {
   let cookies = parseCookies(ctx);
   const tokenJwt = cookies[Cookie.Token];
   setAuthorizationHeader(tokenJwt, apiClient);
-  // Refresh token mechanism
   apiClient.interceptors.response.use(
     (response) => {
       return response;

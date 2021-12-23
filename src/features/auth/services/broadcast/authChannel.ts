@@ -1,7 +1,7 @@
 import Router from "next/router";
 import { AuthMessage } from "../../constants/broadcast";
 import { BroadcastError } from "../../errors/BroadcastError";
-import { Values } from "../../types/utils";
+import { Values } from "../../types";
 
 type ChannelEvent = {
   [key in Values<typeof AuthMessage>]: () => void;

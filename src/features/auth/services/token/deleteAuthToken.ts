@@ -1,5 +1,5 @@
 import { destroyCookie } from "nookies";
-import { AuthMessage } from "../../constants/broadcast";
+import { AuthMessage } from "../../constants";
 import { Context, Cookie } from "../../types";
 import { getAuthChannel } from "../broadcast/authChannel";
 
